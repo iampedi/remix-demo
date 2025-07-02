@@ -19,7 +19,7 @@ export const Header = () => {
 
           <div className="flex flex-1 justify-end gap-2.5">
             <Button variant={"secondary"}>Ask a question</Button>
-            <Button>Shop</Button>
+            <Button disabled>Shop</Button>
           </div>
         </div>
       </div>
