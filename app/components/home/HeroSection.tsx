@@ -8,7 +8,7 @@ type HeroItem = {
 
 const data: HeroItem[] = [
   {
-    icon: "/public/images/icon-fact-01.svg",
+    icon: "/images/icon-fact-01.svg",
     title: (
       <p>
         <strong>3 Mio.</strong> online Arzt- Behandlungen seit 2018
@@ -16,7 +16,7 @@ const data: HeroItem[] = [
     ),
   },
   {
-    icon: "/public/images/icon-fact-02.svg",
+    icon: "/images/icon-fact-02.svg",
     title: (
       <p>
         <strong>schnell &amp; unkompliziert</strong> mit online Fragebogen
@@ -24,7 +24,7 @@ const data: HeroItem[] = [
     ),
   },
   {
-    icon: "/public/images/icon-fact-03.svg",
+    icon: "/images/icon-fact-03.svg",
     title: (
       <p>
         <strong>99%</strong> aller Patienten erhalten ihr Rezept oder AU-Schein
@@ -82,12 +82,12 @@ export const HomeHeroSection = () => {
               <div className="flex flex-col justify-between gap-2">
                 <img
                   className="h-10"
-                  src="/public/images/appstore.webp"
+                  src="/images/appstore.webp"
                   alt="App Store Logo"
                 />
                 <img
                   className="h-10 w-auto"
-                  src="/public/images/android.webp"
+                  src="/images/android.webp"
                   alt="Android Logo"
                 />
               </div>

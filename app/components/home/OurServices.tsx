@@ -22,7 +22,7 @@ type ServiceItem = {
 
 const data: ServiceItem[] = [
   {
-    icon: "/public/images/icon-oele-light.svg",
+    icon: "/images/icon-oele-light.svg",
     title: "Cannabis inkl. Rezept",
     description:
       "Beantrage dein Cannabis Rezept einfach online. Wähle zum besten Preis die passenden Blüten für Beschwerden wie Stress, Schmerzen, Schlaf­störungen, fülle den medizinischen Fragebogen aus und beginne deine Therapie.",
@@ -31,7 +31,7 @@ const data: ServiceItem[] = [
     cta: "Cannabis inkl. Online-Rezept",
   },
   {
-    icon: "/public/images/icon-arznei.svg",
+    icon: "/images/icon-arznei.svg",
     title: "Arznei Rezepte",
     description:
       "Deine Arznei inkl. Rezept vom Online-Arzt, jetzt auch für Diätspritzen. Fülle den medizinischen Fragebogen zu deiner Behandlung aus und lass dir dein Rezept direkt an die Apotheke deiner Wahl schicken.",
@@ -40,7 +40,7 @@ const data: ServiceItem[] = [
     cta: "Arzneimittel-Rezept online",
   },
   {
-    icon: "/public/images/icon-kosmetik-light.svg",
+    icon: "/images/icon-kosmetik-light.svg",
     title: "Krankschreibung",
     description:
       "Deine Online-Krankschreibung in wenigen Minuten. Beantworte den medizinischen Fragebogen oder sprich mit einem unserer Ärzte. Deinen AU-Schein erhältst du bequem als PDF oder auf Wunsch per Post.",
