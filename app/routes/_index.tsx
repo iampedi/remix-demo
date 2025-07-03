@@ -1,5 +1,4 @@
 import type { MetaFunction } from "@remix-run/node";
-import { Footer } from "~/components/Footer";
 import { HomeHeroSection } from "~/components/home/HeroSection";
 import { HomeLogos } from "~/components/home/Logos";
 import { HomeOurServices } from "~/components/home/OurServices";
@@ -19,8 +18,6 @@ export default function Index() {
       <HomeLogos />
 
       <HomeOurServices />
-
-      <Footer />
     </>
   );
 }

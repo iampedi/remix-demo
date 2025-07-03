@@ -1,3 +1,4 @@
+import { Link } from "@remix-run/react";
 import { Button } from "./ui/button";
 
 export const Header = () => {
@@ -6,7 +7,9 @@ export const Header = () => {
       <div className="container mx-auto max-w-6xl px-4 md:px-1.5">
         <div className="flex h-[77px] items-center gap-14">
           <div>
-            <img src="/images/dransay-logo.svg" alt="Project Logo" />
+            <Link to="/">
+              <img src="/images/dransay-logo.svg" alt="Project Logo" />
+            </Link>
           </div>
 
           <nav className="hidden gap-6 text-gray-400 md:flex">
@@ -18,7 +21,9 @@ export const Header = () => {
           </nav>
 
           <div className="hidden flex-1 justify-end gap-2.5 md:flex">
-            <Button variant={"secondary"}>Ask a question</Button>
+            <Button variant={"secondary"} asChild>
+              <Link to={"/questions"}>Ask a question</Link>
+            </Button>
             <Button disabled>Shop</Button>
           </div>
         </div>
