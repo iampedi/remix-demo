@@ -1,30 +1,34 @@
 import { CircleIcon } from "lucide-react";
-import { QuestionForm } from "~/components/questions/QForm";
+import { useEffect, useState } from "react";
+import { QuestionForm, QuestionFormData } from "~/components/questions/QForm";
 import { QuestionsList } from "~/components/questions/QList";
-
-type Question = {
-  name: string;
-  email: string;
-  title: string;
-  question: string;
-};
-
-const data: Question[] = [
-  {
-    name: "John Doe",
-    email: "H5eXo@example.com",
-    title: "Question 1",
-    question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  },
-  {
-    name: "John Doe",
-    email: "H5eXo@example.com",
-    title: "Question 2",
-    question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  },
-];
+import { supabase } from "~/lib/supabase";
 
 export default function QuestionsPage() {
+  const [data, setData] = useState<QuestionFormData[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      setLoading(true);
+
+      const { data, error } = await supabase
+        .from("questions")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Supabase fetch error:", error.message);
+      } else {
+        setData(data || []);
+      }
+
+      setLoading(false);
+    };
+
+    fetchQuestions();
+  }, []);
+
   return (
     <main className="pt-6">
       <div className="container mx-auto max-w-6xl px-4 md:px-1.5">
@@ -38,7 +42,7 @@ export default function QuestionsPage() {
         </p>
       </div>
 
-      <QuestionsList data={data} />
+      <QuestionsList data={data} loading={loading} />
 
       <QuestionForm />
     </main>

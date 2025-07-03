@@ -1,25 +1,32 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CircleIcon } from "lucide-react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { supabase } from "~/lib/supabase";
+import { Button } from "../ui/button";
 import {
   Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage,
 } from "../ui/form";
-import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import { useForm } from "react-hook-form";
-import { CircleIcon } from "lucide-react";
 
-export type QuestionFormData = {
-  name: string;
-  email: string;
-  title: string;
-  question: string;
-};
+export const questionSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Invalid email address"),
+  title: z.string().min(1, "Title is required"),
+  question: z.string().min(1, "Question is required"),
+});
+
+export type QuestionFormData = z.infer<typeof questionSchema>;
+
 export const QuestionForm = () => {
   const form = useForm<QuestionFormData>({
+    resolver: zodResolver(questionSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -29,9 +36,15 @@ export const QuestionForm = () => {
   });
 
   const onSubmit = async (values: QuestionFormData) => {
-    console.log("Submitted:", values);
-    // await fetch('/api/submit-question', { method: 'POST', body: JSON.stringify(values) })
-    form.reset(); // Clear form after submit
+    const { error } = await supabase.from("questions").insert([values]);
+
+    if (error) {
+      console.error("Supabase Error:", error.message);
+      return;
+    }
+
+    console.log("Successfully submitted:", values);
+    form.reset();
   };
 
   return (
@@ -64,7 +77,7 @@ export const QuestionForm = () => {
                     <FormItem>
                       <FormLabel>Your Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="John Doe" {...field} />
+                        <Input {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -78,11 +91,7 @@ export const QuestionForm = () => {
                     <FormItem>
                       <FormLabel>Email Address</FormLabel>
                       <FormControl>
-                        <Input
-                          type="email"
-                          placeholder="john@example.com"
-                          {...field}
-                        />
+                        <Input type="email" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -96,7 +105,7 @@ export const QuestionForm = () => {
                     <FormItem>
                       <FormLabel>Question Title</FormLabel>
                       <FormControl>
-                        <Input placeholder="What is..." {...field} />
+                        <Input {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -110,10 +119,7 @@ export const QuestionForm = () => {
                     <FormItem>
                       <FormLabel>Your Question</FormLabel>
                       <FormControl>
-                        <Textarea
-                          placeholder="Write your question here..."
-                          {...field}
-                        />
+                        <Textarea {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

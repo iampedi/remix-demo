@@ -1,12 +1,21 @@
+import { Loader } from "../home/Loader";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { QuestionFormData } from "./QForm";
 
-export const QuestionsList = ({ data }: { data: QuestionFormData[] }) => {
+export const QuestionsList = ({
+  data,
+  loading,
+}: {
+  data: QuestionFormData[];
+  loading: boolean;
+}) => {
   return (
     <section className="pb-12 pt-6">
       <div className="container mx-auto max-w-6xl px-4 md:px-1.5">
-        {data.length > 0 ? (
+        {loading ? (
+          <Loader />
+        ) : data.length > 0 ? (
           <div className="flex flex-col gap-4">
             {data.map((item, index) => (
               <Card
@@ -34,8 +43,8 @@ export const QuestionsList = ({ data }: { data: QuestionFormData[] }) => {
             ))}
           </div>
         ) : (
-          <p className="text-3xl font-semibold leading-none md:text-4xl">
-            Our experts will answer your concerns.
+          <p className="text-center text-gray-500">
+            There are no questions to display.
           </p>
         )}
       </div>
