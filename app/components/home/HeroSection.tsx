@@ -1,5 +1,7 @@
 import { CheckIcon } from "lucide-react";
 import { Button } from "../ui/button";
+import { useEffect, useState } from "react";
+import builder from "~/lib/builder";
 
 type HeroItem = {
   icon: string;
@@ -35,6 +37,29 @@ const data: HeroItem[] = [
 ];
 
 export const HomeHeroSection = () => {
+  const [content, setContent] = useState<{
+    heroTitle?: string;
+    heroBullets?: { item: string }[];
+    heroImage?: string;
+    heroCta?: string;
+  } | null>(null);
+
+  useEffect(() => {
+    builder
+      .get("home-hero", {
+        options: { noTargeting: true },
+      })
+      .toPromise()
+      .then((res) => {
+        const data = res.data ?? null;
+        setContent(data);
+        console.log("Entries:", data);
+      })
+      .catch(console.error);
+  }, []);
+
+  if (!content) return <p>Loading...</p>;
+
   return (
     <section className="bg-gray-100 md:py-8">
       <div className="container mx-auto max-w-6xl px-4 md:px-1.5">
@@ -50,27 +75,17 @@ export const HomeHeroSection = () => {
               <span className="uppercase">Rating auf Google</span>
             </div>
             <h1 className="mb-2 text-[31px] font-semibold leading-9 md:mb-4 md:text-5xl md:leading-[54px]">
-              Cannabis, Rezept & AU-Schein online bestellen
+              {content.heroTitle}
             </h1>
             <ul className="w-full text-[15px] leading-[30px] md:w-auto md:text-lg md:leading-9 [&_li]:flex [&_li]:items-center [&_li]:gap-2 [&_li]:md:gap-3 [&_li_svg]:rounded-md [&_li_svg]:bg-white [&_li_svg]:p-1 [&_li_svg]:text-green-600">
-              <li>
-                <CheckIcon strokeWidth={4} size={22} /> einfach, schnell und
-                günstig
-              </li>
-              <li>
-                <CheckIcon strokeWidth={4} size={22} /> mit oder ohne
-                Arztgespräch
-              </li>
-              <li>
-                <CheckIcon strokeWidth={4} size={22} /> mit Cannabis Apotheken
-                Marktplatz
-              </li>
-              <li>
-                <CheckIcon strokeWidth={4} size={22} /> Cannabis Erstrezept 0 €
-              </li>
+              {content.heroBullets?.map((bullet, index) => (
+                <li key={index}>
+                  <CheckIcon strokeWidth={4} size={22} /> {bullet.item}
+                </li>
+              ))}
 
               <Button className="mt-8 h-[54px] w-full" disabled>
-                Cannabis & Rezept bestellen
+                {content.heroCta}
               </Button>
             </ul>
 
@@ -109,7 +124,7 @@ export const HomeHeroSection = () => {
           <div className="_image hidden md:block">
             <img
               className="w-[467px]"
-              src="/images/home-sec-01.jpg"
+              src={content.heroImage ?? ""}
               alt="Screen Shot of application"
             />
           </div>
