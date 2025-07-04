@@ -3,7 +3,7 @@ import { Avatar, AvatarImage } from "../ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { QuestionFormData } from "./QForm";
 
-export const QuestionsList = ({
+const QuestionsList = ({
   data,
   loading,
 }: {
@@ -51,3 +51,5 @@ export const QuestionsList = ({
     </section>
   );
 };
+
+export default QuestionsList;

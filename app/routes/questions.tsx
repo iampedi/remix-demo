@@ -1,8 +1,9 @@
 import { CircleIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { QuestionForm, QuestionFormData } from "~/components/questions/QForm";
-import { QuestionsList } from "~/components/questions/QList";
 import { supabase } from "~/lib/supabase";
+
+const QuestionsList = lazy(() => import("~/components/questions/QList"));
 
 export default function QuestionsPage() {
   const [, setData] = useState<QuestionFormData[]>([]);
@@ -53,7 +54,9 @@ export default function QuestionsPage() {
         </p>
       </div>
 
-      <QuestionsList data={questions} loading={loading} />
+      <Suspense fallback={<p>Loading questions...</p>}>
+        <QuestionsList data={questions} loading={loading} />
+      </Suspense>
 
       <QuestionForm onNewQuestion={handleNewQuestion} />
     </main>

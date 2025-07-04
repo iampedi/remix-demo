@@ -63,6 +63,7 @@ export const QuestionForm = ({
               className="w-[400px]"
               src="/images/questions-page-01.webp"
               alt="a nurse is pointing to her right side with her fingers"
+              loading="lazy"
             />
           </div>
 
