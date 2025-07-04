@@ -14,6 +14,7 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
+import { toast } from "sonner";
 
 export const questionSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -24,7 +25,11 @@ export const questionSchema = z.object({
 
 export type QuestionFormData = z.infer<typeof questionSchema>;
 
-export const QuestionForm = () => {
+export const QuestionForm = ({
+  onNewQuestion,
+}: {
+  onNewQuestion: (q: QuestionFormData) => void;
+}) => {
   const form = useForm<QuestionFormData>({
     resolver: zodResolver(questionSchema),
     defaultValues: {
@@ -40,10 +45,12 @@ export const QuestionForm = () => {
 
     if (error) {
       console.error("Supabase Error:", error.message);
+      toast.error(error.message);
       return;
     }
 
-    console.log("Successfully submitted:", values);
+    toast.success("Question submitted successfully!");
+    onNewQuestion(values);
     form.reset();
   };
 
@@ -51,9 +58,9 @@ export const QuestionForm = () => {
     <section className="bg-gray-100 py-12 md:py-16">
       <div className="container mx-auto max-w-6xl px-4 md:px-1.5">
         <div className="flex flex-col-reverse gap-10 md:flex-row">
-          <div className="flex justify-center md:w-1/2">
+          <div className="flex items-center justify-center md:w-1/2">
             <img
-              className="w-[360px]"
+              className="w-[400px]"
               src="/images/questions-page-01.webp"
               alt="a nurse is pointing to her right side with her fingers"
             />
@@ -119,7 +126,7 @@ export const QuestionForm = () => {
                     <FormItem>
                       <FormLabel>Your Question</FormLabel>
                       <FormControl>
-                        <Textarea {...field} />
+                        <Textarea rows={6} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

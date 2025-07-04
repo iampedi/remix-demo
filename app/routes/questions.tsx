@@ -5,7 +5,8 @@ import { QuestionsList } from "~/components/questions/QList";
 import { supabase } from "~/lib/supabase";
 
 export default function QuestionsPage() {
-  const [data, setData] = useState<QuestionFormData[]>([]);
+  const [, setData] = useState<QuestionFormData[]>([]);
+  const [questions, setQuestions] = useState<QuestionFormData[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,6 +22,7 @@ export default function QuestionsPage() {
         console.error("Supabase fetch error:", error.message);
       } else {
         setData(data || []);
+        setQuestions(data || []);
       }
 
       setLoading(false);
@@ -28,6 +30,15 @@ export default function QuestionsPage() {
 
     fetchQuestions();
   }, []);
+
+  const handleNewQuestion = (question: QuestionFormData) => {
+    setQuestions((prev) => [question, ...prev]);
+    scrollToTop();
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <main className="pt-6">
@@ -42,9 +53,9 @@ export default function QuestionsPage() {
         </p>
       </div>
 
-      <QuestionsList data={data} loading={loading} />
+      <QuestionsList data={questions} loading={loading} />
 
-      <QuestionForm />
+      <QuestionForm onNewQuestion={handleNewQuestion} />
     </main>
   );
 }
