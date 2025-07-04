@@ -8,7 +8,7 @@ import {
 import type { LinksFunction } from "@remix-run/node";
 
 import "./tailwind.css";
-import { Header } from "./components/Header";
+import { MainHeader } from "./components/MainHeader";
 import { Footer } from "./components/Footer";
 import { Toaster } from "./components/ui/sonner";
 
@@ -35,7 +35,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <Header />
+        <MainHeader />
         {children}
         <Footer />
         <Toaster richColors theme="light" />

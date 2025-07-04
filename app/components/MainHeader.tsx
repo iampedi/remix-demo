@@ -1,7 +1,7 @@
 import { Link } from "@remix-run/react";
 import { Button } from "./ui/button";
 
-export const Header = () => {
+export const MainHeader = () => {
   return (
     <header className="sticky top-0 z-50 border-b bg-white">
       <div className="container mx-auto max-w-6xl px-4 md:px-1.5">
